@@ -17,18 +17,6 @@
 #
 # Example usage: kubectl create -f <this_file>
 
-# ------------------- Dashboard Secret ------------------- #
-
-apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard-certs
-  namespace: kube-system
-type: Opaque
-
----
 # ------------------- Dashboard Service Account ------------------- #
 
 apiVersion: v1
