@@ -112,8 +112,8 @@ spec:
         - containerPort: 9090
           protocol: TCP
         args:
-          - --tls-key-file=/certs/dashboard.key
-          - --tls-cert-file=/certs/dashboard.crt
+          - --tls-key-file=/certs/tls.key
+          - --tls-cert-file=/certs/tls.crt
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
@@ -160,3 +160,25 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+
+---
+# -------------------  OpenShift Route ------------------- #
+
+kind: Route
+apiVersion: v1
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+  labels:
+    k8s-app: kubernetes-dashboard
+    route: intranet
+spec:
+  host: kube-dashboard.intranet.int.spodon.com
+  to:
+    kind: Service
+    name: kubernetes-dashboard
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+
